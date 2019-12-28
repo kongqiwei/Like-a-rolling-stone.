@@ -1,0 +1,71 @@
+import numpy as np
+#数据采样
+def data_create():
+    for  i in range(100): #循环采样100次
+        x=np.random.uniform(-10.,10.)#随机采样保存在x中
+        #采样高斯噪声
+        eps=np.random.normal(0.,0.1)
+        #得到模型的输出
+        y=1.447*x+0.089+eps
+        data=[]
+        data.append([x,y])#保存样本点
+    data=np.array(data)#转换为2D numnpy 数组
+    return data
+    print(data)
+
+def mse(b,w,points):
+    #根据当前的W,b参数计算均方损失
+    totalError=0
+    for i in range(0,len(points)):
+        x=points[i,0] #得到第i个数据点的x值
+        y=points[i,1]
+        totalError+=(y-(w*x+b))**2
+    return totalError/float(len(points))
+
+def step_gradient(b_current,w_current,points,lr):
+    #计算误差函数在所有点上的导数，并更新w,b
+    b_gradient=0
+    w_gradient=0
+    M=float(len(points))#总样本数
+    for i in range(0,len(points)):
+        x=points[i,0]
+        y=points[i,1]
+        b_gradient+=(2/M)*((w_current*x+b_current)-y)
+        w_gradient+=(2/M)*x*((w_current*x+b_current)-y)
+    new_b=b_current-(lr*b_gradient)
+    new_w=w_current-(lr*w_gradient)
+    return  [new_b,new_w]
+
+def gradient_descent(points,starting_b,starting_w,lr,num_iterations):
+    #循环更新多次
+    b=starting_b
+    w=starting_w
+    for step in range(num_iterations):
+        #计算更新梯度
+        b,w=step_gradient(b,w,np.array(points),lr)
+        loss=mse(b,w,points)#计算当前的均方差，用于监督训练进度
+        if step%50==0:
+            print(f"iteration:{step},loss:{loss},w:{w},b:{b}")
+    return b,w
+
+def main():
+    lr=0.01
+    initial_b=0
+    initial_w=0
+    num_iterations=100
+    data=[]
+    data=data_create()
+    print(data)
+    b,w,losses=gradient_descent(data,initial_b,initial_w,lr,num_iterations)
+    loss=mse(b,w,data)
+    print(f'Final loss :{loss},w:{w},b:{b}')
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
