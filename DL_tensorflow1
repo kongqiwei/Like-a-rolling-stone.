@@ -48,24 +48,11 @@ def gradient_descent(points,starting_b,starting_w,lr,num_iterations):
             print(f"iteration:{step},loss:{loss},w:{w},b:{b}")
     return b,w
 
-def main():
-    lr=0.01
-    initial_b=0
-    initial_w=0
-    num_iterations=100
-    data=[]
-    data=data_create()
-    print(data)
-    b,w,losses=gradient_descent(data,initial_b,initial_w,lr,num_iterations)
-    loss=mse(b,w,data)
-    print(f'Final loss :{loss},w:{w},b:{b}')
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+lr=0.01
+initial_b=0
+initial_w=0
+num_iterations=100
+data=data_create()
+b,w=gradient_descent(data,initial_b,initial_w,lr,num_iterations)
+loss=mse(b,w,data)
+print(f'Final loss :{loss},w:{w},b:{b}')
