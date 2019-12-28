@@ -1,0 +1,7 @@
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
+#在tf2中有一些问题是因为版本问题，在开头用上述代码替换
+import tensorflow as tf
+#来源：
+#https://blog.csdn.net/flowingfog/article/details/93597697
