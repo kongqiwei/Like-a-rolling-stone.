@@ -6,38 +6,16 @@ import tensorflow as tf
 #来源：
 #https://blog.csdn.net/flowingfog/article/details/93597697
 #
-########
-##计算对比cpu和gpu的运行时间
-#创建在CPU 上运算的2 个矩阵
-import tensorflow.compat.v1 as tf
-from timeit import timeit
-tf.disable_v2_behavior()
-n=100000
-m=100
-with tf.device('/cpu:0'):
-    cpu_a = tf.random.normal([m, n])
-    cpu_b = tf.random.normal([n, m])
-    print(cpu_a.device, cpu_b.device)
-# 创建使用GPU 运算的2 个矩阵
-with tf.device('/gpu:0'):
-    gpu_a = tf.random.normal([m, n])
-    gpu_b = tf.random.normal([n, m])
-    print(gpu_a.device, gpu_b.device)
-#并通过timeit.timeit()函数来测量2 个矩阵的运算时间：
-def cpu_run():
-    with tf.device('/cpu:0'):
-        c = tf.matmul(cpu_a, cpu_b)
-    return c
+#######
+#打印张量的指
+#在tf1中打印的方式如下：
+#定义打印方式
+sess = tf.Session()
 
-def gpu_run():
-    with tf.device('/gpu:0'):
-        c = tf.matmul(gpu_a, gpu_b)
-    return c
-# 第一次计算需要热身，避免将初始化阶段时间结算在内
-cpu_time = timeit(cpu_run, number=10000)
-gpu_time = timeit(gpu_run, number=10000)
-print('warmup:', cpu_time, gpu_time)
-# 正式计算10 次，取平均时间
-cpu_time = timeit(cpu_run, number=10000)
-gpu_time = timeit(gpu_run, number=10000)
-print('run time:', cpu_time, gpu_time)
+#方式一
+print(sess.run(x))  
+
+#方式二：
+with tf.Session():  
+  # We can also use 'c.eval()' here.  
+  print(x.eval())  
