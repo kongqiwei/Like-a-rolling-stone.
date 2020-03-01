@@ -17,7 +17,7 @@ def get_index(resolution, index=1):
             for url in urls}
 
 def download_pic(pics):
-    if os.path.exists('必应壁纸'):
+    if os.path.exists('必应壁纸 '):
         pass
     else:
         os.mkdir('必应壁纸')
